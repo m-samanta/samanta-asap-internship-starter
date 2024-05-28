@@ -1,9 +1,26 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import VerifiedIcon from "../../assets/verified.png";
-import TrendingCollection from "../../assets/trending-collection.avif";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import Skeleton from "../ui/Skeleton";
 
 export default function Trending() {
+  const [trendingNFTsData, setTrendingNFTsData] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchTrendingNFTs() {
+      const { data } = await axios.get(
+        "https://remote-internship-api-production.up.railway.app/trendingnfts"
+      );
+      const trendingData = data.data;
+      setTrendingNFTsData(trendingData);
+      setLoading(false);
+    }
+
+    fetchTrendingNFTs();
+  }, []);
+
   return (
     <section id="trending">
       <div className="container">
@@ -27,37 +44,75 @@ export default function Trending() {
                 <div className="trending-column__header__price">Volume</div>
               </div>
               <div className="trending-column__body">
-                {new Array(5).fill(0).map((_, index) => (
+                {trendingNFTsData.slice(0, 5).map((collection, index) => (
                   <Link
-                    to={"/collection"}
+                    to={`/collection/${collection.collectionId}`}
                     key={index}
                     className="trending-collection"
                   >
-                    <div className="trending-collection__rank">1</div>
+                    <div className="trending-collection__rank">
+                      {loading ? index + 1 : collection.rank}
+                    </div>
                     <div className="trending-collection__collection">
                       <figure className="trending-collection__img__wrapper">
-                        <img
-                          src={TrendingCollection}
-                          alt=""
-                          className="trending-collection__img"
-                        />
+                        {loading ? (
+                          <Skeleton
+                            width="100%"
+                            height="100%"
+                            borderRadius="12px"
+                          />
+                        ) : (
+                          <img
+                            src={collection.imageLink}
+                            alt=""
+                            className="trending-collection__img"
+                          />
+                        )}
                       </figure>
                       <div className="trending-collection__name">
-                        Bored Ape Yacht Club
+                        {loading ? (
+                          <Skeleton
+                            width="130px"
+                            height="18px"
+                            borderRadius="2px"
+                          />
+                        ) : (
+                          collection.title
+                        )}
                       </div>
-                      <img
-                        src={VerifiedIcon}
-                        className="trending-collection__verified"
-                      />
+                      {loading ? (
+                        <Skeleton />
+                      ) : (
+                        <img
+                          src={VerifiedIcon}
+                          className="trending-collection__verified"
+                        />
+                      )}
                     </div>
                     <div className="trending-collection__price">
                       <span className="trending-collection__price__span">
-                        11.55 ETH
+                        {loading ? (
+                          <Skeleton
+                            width="70px"
+                            height="18px"
+                            borderRadius="2px"
+                          />
+                        ) : (
+                          parseFloat(collection.floor).toFixed(2) + " ETH"
+                        )}
                       </span>
                     </div>
                     <div className="trending-collection__volume">
                       <span className="trending-collection__volume__span">
-                        2M ETH
+                        {loading ? (
+                          <Skeleton
+                            width="70px"
+                            height="18px"
+                            borderRadius="2px"
+                          />
+                        ) : (
+                          collection.totalVolume + " ETH"
+                        )}
                       </span>
                     </div>
                   </Link>
@@ -76,37 +131,75 @@ export default function Trending() {
                 <div className="trending-column__header__price">Volume</div>
               </div>
               <div className="trending-column__body">
-                {new Array(5).fill(0).map((_, index) => (
+                {trendingNFTsData.slice(5, 10).map((collection, index) => (
                   <Link
-                    to={"/collection"}
+                    to={`/collection/${collection.collectionId}`}
                     key={index}
                     className="trending-collection"
                   >
-                    <div className="trending-collection__rank">1</div>
+                    <div className="trending-collection__rank">
+                      {loading ? index + 6 : collection.rank}
+                    </div>
                     <div className="trending-collection__collection">
                       <figure className="trending-collection__img__wrapper">
-                        <img
-                          src={TrendingCollection}
-                          alt=""
-                          className="trending-collection__img"
-                        />
+                        {loading ? (
+                          <Skeleton
+                            width="100%"
+                            height="100%"
+                            borderRadius="12px"
+                          />
+                        ) : (
+                          <img
+                            src={collection.imageLink}
+                            alt=""
+                            className="trending-collection__img"
+                          />
+                        )}
                       </figure>
                       <div className="trending-collection__name">
-                        Bored Ape Yacht Club
+                        {loading ? (
+                          <Skeleton
+                            width="130px"
+                            height="18px"
+                            borderRadius="2px"
+                          />
+                        ) : (
+                          collection.title
+                        )}
                       </div>
-                      <img
-                        src={VerifiedIcon}
-                        className="trending-collection__verified"
-                      />
+                      {loading ? (
+                        <Skeleton />
+                      ) : (
+                        <img
+                          src={VerifiedIcon}
+                          className="trending-collection__verified"
+                        />
+                      )}
                     </div>
                     <div className="trending-collection__price">
                       <span className="trending-collection__price__span">
-                        11.55 ETH
+                        {loading ? (
+                          <Skeleton
+                            width="70px"
+                            height="18px"
+                            borderRadius="2px"
+                          />
+                        ) : (
+                          parseFloat(collection.floor).toFixed(2) + " ETH"
+                        )}
                       </span>
                     </div>
                     <div className="trending-collection__volume">
                       <span className="trending-collection__volume__span">
-                        2M ETH
+                        {loading ? (
+                          <Skeleton
+                            width="70px"
+                            height="18px"
+                            borderRadius="2px"
+                          />
+                        ) : (
+                          collection.totalVolume + " ETH"
+                        )}
                       </span>
                     </div>
                   </Link>
