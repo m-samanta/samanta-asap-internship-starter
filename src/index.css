@@ -582,6 +582,30 @@ html {
   line-height: 24px;
 }
 
+/* Swipe */
+
+.swiper-slide {
+  margin-right: 16px;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  background-color: #fff;
+  width: 44px;
+  height: 44px;
+  border-radius: 9999px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px #cccccc solid;
+}
+
+.swiper-button-next:after,
+.swiper-button-prev:after {
+  font-size: 20px;
+  color: #000;
+}
+
 /* Footer */
 
 footer {
