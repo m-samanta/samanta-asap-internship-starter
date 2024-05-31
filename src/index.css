@@ -508,13 +508,6 @@ html {
   font-size: 24px;
 }
 
-.new-collections__body,
-.popular-collections__body {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
-}
-
 .collection-column {
   width: calc((100% / 6) - 16px + (16px / 6));
 }
