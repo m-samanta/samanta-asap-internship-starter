@@ -1,61 +1,159 @@
-import { faEye } from "@fortawesome/free-regular-svg-icons";
 import { faShoppingBag } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import Skeleton from "../ui/Skeleton";
 
-export default function CollectionItems() {
+export default function CollectionItems({ collectionPageData, loading }) {
+  const [renderCount, setRenderCount] = useState(12);
+  const [sortBy, setSortBy] = useState("");
+
+  const handleSortChange = (e) => {
+    setSortBy(e.target.value);
+  };
+
+  const sortItemsByPrice = (a, b) => {
+    const priceA = parseFloat(a.price);
+    const priceB = parseFloat(b.price);
+
+    if (sortBy === "highToLow") {
+      return priceB - priceA;
+    } else if (sortBy === "lowToHigh") {
+      return priceA - priceB;
+    } else {
+      return 0;
+    }
+  };
+
+  const loadMoreCollectionsButton = () => {
+    setRenderCount((prevCount) => prevCount + 6);
+  };
+
+  const hideLoadMoreCollectionsButton = () => {
+    if (
+      loading ||
+      collectionPageData?.items?.length <= renderCount ||
+      renderCount % 6 !== 0
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
   return (
     <section id="collection-items">
       <div className="row collection-items__row">
         <div className="collection-items__header">
           <div className="collection-items__header__left">
             <span className="collection-items__header__live">
-              <div className="green-pulse"></div>
-              Live
+              {loading ? (
+                <Skeleton width="52px" height="16px" borderRadius="4px" />
+              ) : (
+                <>
+                  <div className="green-pulse"></div>
+                  Live
+                </>
+              )}
             </span>
             <span className="collection-items__header__results">
-              10 results
+              {loading ? (
+                <Skeleton width="72px" height="16px" borderRadius="4px" />
+              ) : (
+                <>{renderCount} results</>
+              )}
             </span>
           </div>
-          <select className="collection-items__header__sort">
-            <option value="" default>
-              Default
-            </option>
-            <option value="">Price high to low</option>
-            <option value="">Price low to high</option>
-          </select>
+          {loading ? (
+            <Skeleton width="240px" height="48px" borderRadius="8px" />
+          ) : (
+            <>
+              <select
+                className="collection-items__header__sort"
+                onChange={handleSortChange}
+              >
+                <option value="" disabled={sortBy !== ""}>
+                  Default
+                </option>
+                <option value="highToLow">Price high to low</option>
+                <option value="lowToHigh">Price low to high</option>
+              </select>
+            </>
+          )}
         </div>
         <div className="collection-items__body">
-          {new Array(8).fill(0).map((_, index) => (
-            <div className="item-column">
-              <Link to={"/item"} key={index} className="item">
+          {loading ? (
+            <>
+             {new Array(12).fill(0).map((_, index) => (
+            <div className="item-column" key={index}>
+              <div className="item">
                 <figure className="item__img__wrapper">
-                  <img
-                    src="https://i.seadn.io/gcs/files/0a085499e0f3800321618af356c5d36b.png?auto=format&dpr=1&w=384"
-                    alt=""
-                    className="item__img"
-                  />
+                  <Skeleton width="100%" height="100%" />
                 </figure>
                 <div className="item__details">
-                  <span className="item__details__name">Meebit #0001</span>
-                  <span className="item__details__price">0.98 ETH</span>
+                  <span className="item__details__name">
+                    <Skeleton width="80px" height="16px" borderRadius="4px" />
+                  </span>
+                  <span className="item__details__price">
+                  <Skeleton width="48px" height="16px" borderRadius="4px" />
+                  </span>
                   <span className="item__details__last-sale">
-                    Last sale: 7.45 ETH
+                  <Skeleton width="120px" height="16px" borderRadius="4px" />
                   </span>
                 </div>
-                <div className="item__see-more">
-                  <button className="item__see-more__button">See More</button>
-                  <div className="item__see-more__icon">
-                    <FontAwesomeIcon icon={faShoppingBag} />
-                  </div>
-                </div>
-              </Link>
+              </div>
             </div>
           ))}
+            </>
+          ) : (
+            <>
+              {collectionPageData?.items
+                .sort(sortItemsByPrice)
+                .slice(0, renderCount)
+                .map((item, index) => (
+                  <div className="item-column" key={index}>
+                    <Link to={`/item/${item.itemId}`} className="item">
+                      <figure className="item__img__wrapper">
+                        <img
+                          src={item.imageLink}
+                          alt=""
+                          className="item__img"
+                        />
+                      </figure>
+                      <div className="item__details">
+                        <span className="item__details__name">
+                          {item.title}
+                        </span>
+                        <span className="item__details__price">
+                          {item.price} ETH
+                        </span>
+                        <span className="item__details__last-sale">
+                          Last sale: {item.lastSale} ETH
+                        </span>
+                      </div>
+                      <div className="item__see-more">
+                        <button className="item__see-more__button">
+                          See More
+                        </button>
+                        <div className="item__see-more__icon">
+                          <FontAwesomeIcon icon={faShoppingBag} />
+                        </div>
+                      </div>
+                    </Link>
+                  </div>
+                ))}
+            </>
+          )}
         </div>
       </div>
-      <button className="collection-page__button">Load more</button>
+      {!hideLoadMoreCollectionsButton() && (
+        <button
+          className="collection-page__button"
+          onClick={loadMoreCollectionsButton}
+        >
+          Load more
+        </button>
+      )}
     </section>
   );
 }
