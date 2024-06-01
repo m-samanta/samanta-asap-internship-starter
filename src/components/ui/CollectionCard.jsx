@@ -32,7 +32,7 @@ const CollectionCard = ({ collection, loading }) => {
         </div>
       ) : (
         <Link
-          to={`/collection/${collection.collectionId}`}
+          to={`/collection/${collection.collectionId ? collection.collectionId : collection.id}`}
           className="collection"
         >
           <img

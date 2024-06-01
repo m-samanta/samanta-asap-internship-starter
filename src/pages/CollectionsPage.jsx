@@ -21,12 +21,12 @@ export default function CollectionsPage() {
     window.scrollTo(0, 0);
   }, []);
 
-  const loadMoreButton = () => {
+  const loadMoreCollectionsButton = () => {
     if (loading) return;
     else setRenderCount((prevCount) => prevCount + 6);
   };
 
-  const hideLoadMoreButton = () => {
+  const hideLoadMoreCollectionsButton = () => {
     if (collectionsPageData.length <= renderCount || renderCount % 6 !== 0) {
       return true;
     } else {
@@ -47,8 +47,11 @@ export default function CollectionsPage() {
               </div>
             ))}
         </div>
-        {!hideLoadMoreButton() && (
-          <button className="collections-page__button" onClick={loadMoreButton}>
+        {!hideLoadMoreCollectionsButton() && (
+          <button
+            className="collections-page__button"
+            onClick={loadMoreCollectionsButton}
+          >
             Load more
           </button>
         )}
