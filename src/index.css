@@ -1405,13 +1405,6 @@ ITEM PAGE
   line-height: 24px;
 }
 
-.recommended-items__body {
-  display: flex;
-  gap: 16px;
-  border-bottom: 1px solid rgba(18, 18, 18, 0.12);
-  flex-wrap: wrap;
-}
-
 .recommended-items__footer {
   display: flex;
   justify-content: center;
@@ -1579,7 +1572,7 @@ USER PAGE
 
 @media (max-width: 1760px) {
   .item-column {
-    width: calc((100% / 5) - 16px + (16px / 5));
+    width: calc((100% / 6) - 16px + (16px / 6));
   }
 }
 
@@ -1593,6 +1586,10 @@ USER PAGE
   }
 
   .collection-column {
+    width: calc((100% / 5) - 16px + (16px / 5));
+  }
+
+  .item-column {
     width: calc((100% / 5) - 16px + (16px / 5));
   }
 
