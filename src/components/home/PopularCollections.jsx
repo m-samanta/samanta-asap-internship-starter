@@ -5,6 +5,8 @@ import { Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import CollectionCard from "../ui/CollectionCard";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 export default function PopularCollections() {
   const [popularCollectionsData, setPopularCollectionsData] = useState([]);
@@ -23,12 +25,27 @@ export default function PopularCollections() {
     fetchPopularCollections();
   }, []);
 
+  useEffect(() => {
+    AOS.init();
+  }, []);
+
   return (
     <section id="popular-collections">
       <div className="container">
         <div className="row">
-          <h2 className="popular-collections__title">Popular Collections</h2>
-          <div className="popular-collections__body">
+          <h2
+            className="popular-collections__title"
+            data-aos="fade-up"
+            data-aos-duration="600"
+          >
+            Popular Collections
+          </h2>
+          <div
+            className="popular-collections__body"
+            data-aos="fade-up"
+            data-aos-delay="100"
+            data-aos-duration="600"
+          >
             {loading ? (
               <Swiper
                 modules={[Navigation]}

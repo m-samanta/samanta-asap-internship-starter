@@ -5,6 +5,8 @@ import { Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import CollectionCard from "../ui/CollectionCard";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 export default function NewCollections() {
   const [newCollectionsData, setNewCollectionsData] = useState([]);
@@ -23,13 +25,28 @@ export default function NewCollections() {
     fetchNewCollections();
   }, []);
 
+  useEffect(() => {
+    AOS.init();
+  }, []);
+
   return (
     <section id="new-collections">
       <div className="container">
         <div className="row">
-          <h2 className="new-collections__title">New Collections</h2>
-          {loading ? (
-            <div className="new-collections__body">
+          <h2
+            className="new-collections__title"
+            data-aos="fade-up"
+            data-aos-duration="600"
+          >
+            New Collections
+          </h2>
+          <div
+            className="new-collections__body"
+            data-aos="fade-up"
+            data-aos-delay="100"
+            data-aos-duration="600"
+          >
+            {loading ? (
               <Swiper
                 modules={[Navigation]}
                 navigation
@@ -42,9 +59,7 @@ export default function NewCollections() {
                   </SwiperSlide>
                 ))}
               </Swiper>
-            </div>
-          ) : (
-            <div className="new-collections__body">
+            ) : (
               <Swiper
                 modules={[Navigation]}
                 navigation
@@ -57,8 +72,8 @@ export default function NewCollections() {
                   </SwiperSlide>
                 ))}
               </Swiper>
-            </div>
-          )}
+            )}
+          </div>
         </div>
       </div>
     </section>
