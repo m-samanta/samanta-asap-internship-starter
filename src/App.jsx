@@ -19,6 +19,7 @@ function App() {
         <Route path="/user" element={<UserPage />} />
         <Route path="/collection/:id" element={<CollectionPage />} />
         <Route path="/item/:itemId" element={<ItemPage />} />
+        <Route path="/user/:ownerId" element={<UserPage />} />
       </Routes>
       <Footer />
     </Router>
