@@ -3,6 +3,8 @@ import VerifiedIcon from "../../assets/verified.png";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import Skeleton from "../ui/Skeleton";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 export default function Trending() {
   const [trendingNFTsData, setTrendingNFTsData] = useState([]);
@@ -21,17 +23,30 @@ export default function Trending() {
     fetchTrendingNFTs();
   }, []);
 
+  useEffect(() => {
+    AOS.init();
+  }, []);
+
   return (
     <section id="trending">
       <div className="container">
         <div className="row trending__row">
-          <div className="trending__header">
+          <div
+            className="trending__header"
+            data-aos="fade-up"
+            data-aos-duration="600"
+          >
             <h2 className="trending__header__title">Trending NFTs</h2>
             <Link className="trending__header__button" to={"/collections"}>
               View All
             </Link>
           </div>
-          <div className="trending__body">
+          <div
+            className="trending__body"
+            data-aos="fade-up"
+            data-aos-delay="100"
+            data-aos-duration="600"
+          >
             <div className="trending-column">
               <div className="trending-column__header">
                 <div className="trending-column__header__rank">#</div>
