@@ -1,4 +1,4 @@
-import { faShoppingBag, faTableCells } from "@fortawesome/free-solid-svg-icons";
+import { faTableCells } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -8,6 +8,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
+import ItemCard from "../ui/ItemCard";
 
 export default function RecommendedItems({ itemPageData, itemId }) {
   const [recommendedItemsData, setRecommendedItemsData] = useState([]);
@@ -62,43 +63,8 @@ export default function RecommendedItems({ itemPageData, itemId }) {
                   slidesPerView="auto"
                 >
                   {new Array(10).fill(0).map((_, index) => (
-                    <SwiperSlide className="item-column" key={index}>
-                      <div key={index} className="item">
-                        <figure className="item__img__wrapper">
-                          <Skeleton width="100%" height="100%" />
-                        </figure>
-                        <div className="item__details">
-                          <span className="item__details__name">
-                            <Skeleton
-                              width="80px"
-                              height="16px"
-                              borderRadius="4px"
-                            />
-                          </span>
-                          <span className="item__details__price">
-                            <Skeleton
-                              width="48px"
-                              height="16px"
-                              borderRadius="4px"
-                            />
-                          </span>
-                          <span className="item__details__last-sale">
-                            <Skeleton
-                              width="120px"
-                              height="16px"
-                              borderRadius="4px"
-                            />
-                          </span>
-                        </div>
-                        <div className="item__see-more">
-                          <button className="item__see-more__button">
-                            See More
-                          </button>
-                          <div className="item__see-more__icon">
-                            <FontAwesomeIcon icon={faShoppingBag} />
-                          </div>
-                        </div>
-                      </div>
+                    <SwiperSlide className="item-column-recommended" key={index}>
+                      <ItemCard loading={loading} />
                     </SwiperSlide>
                   ))}
                 </Swiper>
@@ -112,36 +78,9 @@ export default function RecommendedItems({ itemPageData, itemId }) {
                   {recommendedItemsData
                     .filter((item) => item.itemId !== itemId)
                     .slice(0, 10)
-                    .map((item, index) => (
-                      <SwiperSlide className="item-column" key={item.itemId}>
-                        <Link to={"/item/" + item.itemId} className="item">
-                          <figure className="item__img__wrapper">
-                            <img
-                              src={item.imageLink}
-                              alt={item.title}
-                              className="item__img"
-                            />
-                          </figure>
-                          <div className="item__details">
-                            <span className="item__details__name">
-                              {item.title}
-                            </span>
-                            <span className="item__details__price">
-                              {item.price} ETH
-                            </span>
-                            <span className="item__details__last-sale">
-                              Last sale: {item.lastSale} ETH
-                            </span>
-                          </div>
-                          <div className="item__see-more">
-                            <button className="item__see-more__button">
-                              See More
-                            </button>
-                            <div className="item__see-more__icon">
-                              <FontAwesomeIcon icon={faShoppingBag} />
-                            </div>
-                          </div>
-                        </Link>
+                    .map((item) => (
+                      <SwiperSlide className="item-column-recommended" key={item.itemId}>
+                        <ItemCard item={item} loading={loading} />
                       </SwiperSlide>
                     ))}
                 </Swiper>

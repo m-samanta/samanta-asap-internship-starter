@@ -1007,6 +1007,10 @@ footer {
   width: calc((100% / 6) - 16px + (16px / 6));
 }
 
+.item-column-recommended {
+  width: calc((100% / 6) - 16px + (16px / 6));
+}
+
 .item {
   display: flex;
   flex-direction: column;
@@ -1572,7 +1576,7 @@ USER PAGE
 
 @media (max-width: 1760px) {
   .item-column {
-    width: calc((100% / 6) - 16px + (16px / 6));
+    width: calc(20% - 12.8px);
   }
 }
 
@@ -1590,6 +1594,10 @@ USER PAGE
   }
 
   .item-column {
+    width: calc((100% / 5) - 16px + (16px / 5));
+  }
+  
+  .item-column-recommended {
     width: calc((100% / 5) - 16px + (16px / 5));
   }
 
@@ -1612,6 +1620,10 @@ USER PAGE
 
 @media (max-width: 1440px) {
   .item-column {
+    width: calc((100% / 4) - 16px + (16px / 4));
+  }
+
+  .item-column-recommended {
     width: calc((100% / 4) - 16px + (16px / 4));
   }
 }
@@ -1729,6 +1741,10 @@ USER PAGE
     width: calc((100% / 3) - 16px + (16px / 3));
   }
 
+  .item-column-recommended {
+    width: calc((100% / 3) - 16px + (16px / 3));
+  }
+
   /* Item Page */
 
   .item-page__row {
@@ -1819,6 +1835,10 @@ USER PAGE
   .item-column {
     width: calc((100% / 2) - 16px + (16px / 2));
   }
+
+  .item-column-recommended {
+    width: calc((100% / 2) - 16px + (16px / 2));
+  }
 }
 
 @media (max-width: 640px) {
@@ -1880,6 +1900,10 @@ USER PAGE
   }
 
   .item-column {
+    width: calc((100% / 1) - 16px + (16px / 1));
+  }
+
+  .item-column-recommended {
     width: calc((100% / 1) - 16px + (16px / 1));
   }
 }
