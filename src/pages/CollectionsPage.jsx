@@ -39,13 +39,19 @@ export default function CollectionsPage() {
       <div className="row">
         <h1 className="collections-page__title">Collections</h1>
         <div className="collections__body">
-          {collectionsPageData
-            .slice(0, renderCount)
-            .map((collection, index) => (
-              <div className="collection-column" key={index}>
-                <CollectionCard collection={collection} loading={loading} />
-              </div>
-            ))}
+          {loading
+            ? new Array(12).fill(0).map((_, index) => (
+                <div className="collection-column" key={index}>
+                  <CollectionCard loading={loading} />{" "}
+                </div>
+              ))
+            : collectionsPageData
+                .slice(0, renderCount)
+                .map((collection, index) => (
+                  <div className="collection-column" key={index}>
+                    <CollectionCard collection={collection} loading={loading} />
+                  </div>
+                ))}
         </div>
         {!hideLoadMoreCollectionsButton() && (
           <button
